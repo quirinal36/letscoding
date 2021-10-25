@@ -2,6 +2,8 @@ plugins {
 	id 'org.springframework.boot' version '2.5.6'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'jacoco'
+	id 'com.github.kt3k.coveralls' version '2.12.0'
 }
 
 group = 'kr.coding'
@@ -29,12 +31,7 @@ dependencies {
 	
 	// https://mvnrepository.com/artifact/com.google.code.gson/gson
 	implementation group: 'com.google.code.gson', name: 'gson', version: '2.7'
-	// https://mvnrepository.com/artifact/org.kt3k.gradle.plugin/coveralls-gradle-plugin
-	implementation group: 'org.kt3k.gradle.plugin', name: 'coveralls-gradle-plugin', version: '2.8.3'
 }
-
-apply plugin: 'com.github.kt3k.coveralls'
-apply plugin: 'jacoco'
 
 jacocoTestReport {
     reports {

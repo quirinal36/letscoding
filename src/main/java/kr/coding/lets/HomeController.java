@@ -50,7 +50,7 @@ public class HomeController {
 
     public String getAccessToken (String authorize_code) throws UnsupportedEncodingException {
         String access_Token = "";
-        // String refresh_Token = "";
+        String refresh_Token = "";
         String reqURL = "https://kauth.kakao.com/oauth/token";
         
         try {

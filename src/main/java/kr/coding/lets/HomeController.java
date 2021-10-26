@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import lombok.extern.slf4j.Slf4j;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-
+@Slf4j
 @Controller
 public class HomeController {
     final String CLIENT_APP_KEY = "1bb9b32f63329982713aba6cbd591e8e";
@@ -27,7 +29,7 @@ public class HomeController {
     @GetMapping("/")
     public String index(Model model){
         model.addAttribute("name", "LEEHG");
-
+        log.info("hi");
         return "index";
     }
     @RequestMapping("/login")

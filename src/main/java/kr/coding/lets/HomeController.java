@@ -23,8 +23,8 @@ import com.google.gson.JsonParser;
 @Controller
 public class HomeController {
     final String CLIENT_APP_KEY = "1bb9b32f63329982713aba6cbd591e8e";
-    final String CLIENT_SECRET = "qdjYrTR1Kf7Gk2XtToGTtKYVpntIfntC";
-    final String REDIRECT_URI = "http://127.0.0.1:8080/login";
+    // final String CLIENT_SECRET = "qdjYrTR1Kf7Gk2XtToGTtKYVpntIfntC";
+    final String REDIRECT_URI = "http://127.0.0.1:8001/login/oauth2/code/kakao";
 
     @GetMapping("/")
     public String index(Model model){
@@ -32,7 +32,7 @@ public class HomeController {
         log.info("hi");
         return "index";
     }
-    @RequestMapping("/login")
+    @RequestMapping("/login/oauth2/code/kakao")
     public String login(Model model, @RequestParam("code")String code) throws UnsupportedEncodingException{
         // final String accessToken = getAccessToken(code);
 
@@ -66,7 +66,7 @@ public class HomeController {
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=").append(CLIENT_APP_KEY); //수정 할것
             sb.append("&redirect_uri=").append(REDIRECT_URI); //수정 할것
-            sb.append("&client_secret=").append(CLIENT_SECRET); //수정 할것
+            //sb.append("&client_secret=").append(CLIENT_SECRET); //수정 할것
             sb.append("&code=").append(authorize_code);
             bw.write(sb.toString());
             bw.flush();
@@ -88,7 +88,6 @@ public class HomeController {
             refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
             
             br.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         } 

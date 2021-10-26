@@ -21,7 +21,10 @@ import com.google.gson.JsonParser;
 @Controller
 public class HomeController {
     final String CLIENT_APP_KEY = "1bb9b32f63329982713aba6cbd591e8e";
-    @RequestMapping("/")
+    final String CLIENT_SECRET = "qdjYrTR1Kf7Gk2XtToGTtKYVpntIfntC";
+    final String REDIRECT_URI = "http://127.0.0.1:8080/login";
+
+    @GetMapping("/")
     public String index(Model model){
         model.addAttribute("name", "LEEHG");
 
@@ -29,7 +32,7 @@ public class HomeController {
     }
     @RequestMapping("/login")
     public String login(Model model, @RequestParam("code")String code) throws UnsupportedEncodingException{
-        final String accessToken = getAccessToken(code);
+        // final String accessToken = getAccessToken(code);
 
         model.addAttribute("name", "LOGIN");
 
@@ -40,14 +43,14 @@ public class HomeController {
         StringBuilder url = new StringBuilder();
         url.append("https://kauth.kakao.com/oauth/authorize?client_id=")
             .append(CLIENT_APP_KEY)
-            .append("&redirect_uri=http://127.0.0.1:8080/login")
+            .append("&redirect_uri=").append(REDIRECT_URI)
             .append("&response_type=code");
         return "redirect:" + url.toString();
     }
 
     public String getAccessToken (String authorize_code) throws UnsupportedEncodingException {
         String access_Token = "";
-        String refresh_Token = "";
+        // String refresh_Token = "";
         String reqURL = "https://kauth.kakao.com/oauth/token";
         
         try {
@@ -60,9 +63,9 @@ public class HomeController {
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=").append(CLIENT_APP_KEY); //수정 할것
-            sb.append("&redirect_uri=http://127.0.0.1:8080/login"); //수정 할것
-            sb.append("&client_secret=qdjYrTR1Kf7Gk2XtToGTtKYVpntIfntC"); //수정 할것
-            sb.append("&code=" + authorize_code);
+            sb.append("&redirect_uri=").append(REDIRECT_URI); //수정 할것
+            sb.append("&client_secret=").append(CLIENT_SECRET); //수정 할것
+            sb.append("&code=").append(authorize_code);
             bw.write(sb.toString());
             bw.flush();
             int responseCode = conn.getResponseCode();

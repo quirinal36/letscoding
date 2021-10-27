@@ -29,5 +29,6 @@ public class LetsSecurityConfigureAdapter extends WebSecurityConfigurerAdapter{
             .and().logout().logoutSuccessUrl("/")
             .and().oauth2Login().userInfoEndpoint().userService(customOAuth2UserService);
 		http.addFilterBefore(letsFilter, UsernamePasswordAuthenticationFilter.class);
+        super.configure(http);
     }
 }

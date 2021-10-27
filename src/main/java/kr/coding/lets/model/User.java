@@ -19,11 +19,11 @@ public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String name;
     @Column(nullable = false)
     private String email;
-    @Column
+    @Column(nullable = true)
     private String picture;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

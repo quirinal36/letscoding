@@ -9,26 +9,35 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.coding.lets.model.SessionUser;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+
 @Slf4j
+@RequiredArgsConstructor
 @Controller
 public class HomeController {
     final String CLIENT_APP_KEY = "1bb9b32f63329982713aba6cbd591e8e";
     // final String CLIENT_SECRET = "qdjYrTR1Kf7Gk2XtToGTtKYVpntIfntC";
     final String REDIRECT_URI = "http://127.0.0.1:8001/login/oauth2/code/kakao";
 
+    private final HttpSession httpSession;
+    
     @GetMapping("/")
     public String index(Model model){
-        model.addAttribute("name", "LEEHG");
+        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+        if(user != null){
+            model.addAttribute("userName", user.getName());
+        }
         log.info("hi");
         return "index";
     }

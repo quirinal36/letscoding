@@ -6,6 +6,22 @@
         <title>LetsCoding&Play</title>
     </head>
     <body>
-        hello: <h2 th:text="${name}"></h2>
+        <h1>LetsCoding&Play</h1>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="/posts/save" role="button" class="btn btn-primary">글 등록</a>
+                    
+                    Logged in as: <span id="user" th:text="${userName}"></span>
+                    <a href="/logout" class="btn btn-info active" role="button">Logout</a>
+                    
+                    
+                    <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
+                    <a href="/oauth2/authorization/kakao" class="btn btn-success active" role="button">Kakao Login</a>
+                    <a href="/oauth2/authorization/naver" class="btn btn-success active" role="button">Naver Login</a>
+                    
+                </div>
+            </div>
+        </div>
     </body>
 </html>

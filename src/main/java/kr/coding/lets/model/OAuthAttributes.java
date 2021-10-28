@@ -27,17 +27,15 @@ public class OAuthAttributes {
         log.info(registrationId);
         log.info(userNameAttributeName);
         // kakao         
-        // if("kakao".equals(registrationId)){
+        if("kakao".equals(registrationId)){
             return ofKakao("id", attributes);
-        // }
-        /*
+        }
         // naver
-        if("naver".equals(registrationId)){
+        else if("naver".equals(registrationId)){
             return ofNaver("id", attributes);
         }
         // google
         return ofGoogle(userNameAttributeName, attributes);
-        */
     }
     
     // (new!)
@@ -56,7 +54,27 @@ public class OAuthAttributes {
                 .build();
     }
     
-    // ofGoogle, ofNaver 로직 생략...
+    private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes) {
+        // JSON형태이기 떄문에 Map을 통해서 데이터를 가져온다.
+        Map<String, Object> response = (Map<String, Object>)attributes.get("response");
+        
+        return OAuthAttributes.builder()
+                .name((String) response.get("name"))
+                .email((String) response.get("email"))
+                .picture((String) response.get("profile_image"))
+                .attributes(response)
+                .nameAttributeKey(userNameAttributeName)
+                .build();
+    }
+    private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes) {
+        return OAuthAttributes.builder()
+                .name((String) attributes.get("name"))
+                .email((String) attributes.get("email"))
+                .picture((String) attributes.get("picture"))
+                .attributes(attributes)
+                .nameAttributeKey(userNameAttributeName)
+                .build();
+    }
 
     public User toEntity(){
         return User.builder()

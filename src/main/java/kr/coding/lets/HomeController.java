@@ -32,14 +32,7 @@ public class HomeController {
         log.info("hi");
         return "index";
     }
-    @RequestMapping("/login/oauth2/code/kakao")
-    public String login(Model model, @RequestParam("code")String code) throws UnsupportedEncodingException{
-        // final String accessToken = getAccessToken(code);
-
-        model.addAttribute("name", "LOGIN");
-
-        return "index";
-    }
+    
     @GetMapping("/kakaoAuth")
     public String kakaoConnect(){
         StringBuilder url = new StringBuilder();

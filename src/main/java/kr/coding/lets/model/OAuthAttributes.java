@@ -13,19 +13,19 @@ public class OAuthAttributes {
     private String name;
     private String email;
     private String picture;
+    private String phone;
 
     @Builder
-    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String picture) {
+    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String picture, String phone) {
         this.attributes = attributes;
         this.nameAttributeKey = nameAttributeKey;
         this.name = name;
         this.email = email;
         this.picture = picture;
+        this.phone = phone;
     }
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes){
-        log.info(registrationId);
-        log.info(userNameAttributeName);
         // kakao         
         if("kakao".equals(registrationId)){
             return ofKakao("id", attributes);
@@ -42,13 +42,17 @@ public class OAuthAttributes {
     private static OAuthAttributes ofKakao(String userNameAttributeName, Map<String, Object> attributes) {
         // kakao는 kakao_account에 유저정보가 있다. (email)
         Map<String, Object> kakaoAccount = (Map<String, Object>)attributes.get("kakao_account");
+        log.info("---------------kakaoAccount---------------");
+        log.info(kakaoAccount.toString());
         // kakao_account안에 또 profile이라는 JSON객체가 있다. (nickname, profile_image)
         Map<String, Object> kakaoProfile = (Map<String, Object>)kakaoAccount.get("profile");
-
+        log.info("---------------kakaoProfile---------------");
+        log.info(kakaoProfile.toString());
         return OAuthAttributes.builder()
                 .name((String) kakaoProfile.get("nickname"))
                 .email((String) kakaoAccount.get("email"))
                 .picture((String) kakaoProfile.get("profile_image_url"))
+                .phone((String) kakaoAccount.get("phone_number"))
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
@@ -81,6 +85,7 @@ public class OAuthAttributes {
                 .name(name)
                 .email(email)
                 .picture(picture)
+                .phone(phone)
                 .role(Role.GUEST) // 기본 권한 GUEST
                 .build();
     }

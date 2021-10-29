@@ -10,16 +10,17 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-6">
-                    <a href="/posts/save" role="button" class="btn btn-primary">글 등록</a>
+                    <a sec:authorize="hasRole('ROLE_LETS')" href="/posts/save" role="button" class="btn btn-primary">글 등록</a>
                     
-                    Logged in as: <span id="user" th:text="${userName}"></span>
-                    <a href="/logout" class="btn btn-info active" role="button">Logout</a>
-                    
+                    <div sec:authorize="isAuthenticated()">
+                        Logged in as: <span id="user" th:text="${userName}"></span>
+                        <a href="/logout" class="btn btn-info active" role="button">Logout</a>
+                    </div>
                     
                     <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
                     <a href="/oauth2/authorization/kakao" class="btn btn-success active" role="button">Kakao Login</a>
                     <a href="/oauth2/authorization/naver" class="btn btn-success active" role="button">Naver Login</a>
-                    
+                    <span th:text="${auth}"></span>
                 </div>
             </div>
         </div>

@@ -22,6 +22,9 @@ public class OAuthAttributes {
         this.name = name;
         this.email = email;
         this.picture = picture;
+        if(phone.indexOf("+82") > 0){
+            phone = phone.substring(3, phone.length()).trim();
+        }
         this.phone = phone;
     }
 
@@ -42,12 +45,8 @@ public class OAuthAttributes {
     private static OAuthAttributes ofKakao(String userNameAttributeName, Map<String, Object> attributes) {
         // kakao는 kakao_account에 유저정보가 있다. (email)
         Map<String, Object> kakaoAccount = (Map<String, Object>)attributes.get("kakao_account");
-        log.info("---------------kakaoAccount---------------");
-        log.info(kakaoAccount.toString());
         // kakao_account안에 또 profile이라는 JSON객체가 있다. (nickname, profile_image)
         Map<String, Object> kakaoProfile = (Map<String, Object>)kakaoAccount.get("profile");
-        log.info("---------------kakaoProfile---------------");
-        log.info(kakaoProfile.toString());
         return OAuthAttributes.builder()
                 .name((String) kakaoProfile.get("nickname"))
                 .email((String) kakaoAccount.get("email"))
@@ -66,6 +65,7 @@ public class OAuthAttributes {
                 .name((String) response.get("name"))
                 .email((String) response.get("email"))
                 .picture((String) response.get("profile_image"))
+                .phone((String) response.get("mobile"))
                 .attributes(response)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
@@ -86,7 +86,6 @@ public class OAuthAttributes {
                 .email(email)
                 .picture(picture)
                 .phone(phone)
-                .role(Role.GUEST) // 기본 권한 GUEST
                 .build();
     }
 

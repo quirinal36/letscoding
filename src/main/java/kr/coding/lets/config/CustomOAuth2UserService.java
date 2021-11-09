@@ -3,6 +3,7 @@ package kr.coding.lets.config;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -17,17 +18,23 @@ import kr.coding.lets.model.OAuthAttributes;
 import kr.coding.lets.model.Roles;
 import kr.coding.lets.model.SessionUser;
 import kr.coding.lets.model.User;
-import kr.coding.lets.model.UserRepository;
+import kr.coding.lets.model.UserRole;
+import kr.coding.lets.repository.UserRepository;
+import kr.coding.lets.service.RolesService;
 
 import javax.servlet.http.HttpSession;
+
 import java.util.Set;
 import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private final UserRepository userRepository;
     private final HttpSession httpSession;
+    @Autowired
+    private final RolesService rolesService;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -43,6 +50,9 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         User user = saveOrUpdate(attributes);
         httpSession.setAttribute("user", new SessionUser(user)); // SessionUser (직렬화된 dto 클래스 사용)
         Set<GrantedAuthority> grantedAuthorities = getAuthorities(user);
+        final String GUEST_ROLE = new StringBuilder("ROLE_").append(UserRole.GUEST.name().toUpperCase()).toString();
+
+        grantedAuthorities.add(new SimpleGrantedAuthority(GUEST_ROLE));
         return new DefaultOAuth2User(grantedAuthorities,
                 attributes.getAttributes(),
                 attributes.getNameAttributeKey());
@@ -52,11 +62,19 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         final Set<GrantedAuthority> authorities = roleByUserId.stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName().toString().toUpperCase())).collect(Collectors.toSet());
         return authorities;
     }
+
     // 유저 생성 및 수정 서비스 로직
     private User saveOrUpdate(OAuthAttributes attributes){
-        User user = userRepository.findByPhone(attributes.getPhone())
-                .map(entity -> entity.update(attributes.getName(), attributes.getPicture(), attributes.getPhone()))
+        String phone = attributes.getPhone();
+        if(! (phone.indexOf("+82")<0)){
+            phone = phone.substring(3, phone.length()).trim();
+            phone = "0" + phone;
+        }
+        
+        User user = userRepository.findByPhone(phone)
+                .map(entity -> entity.update(attributes.getEmail(), attributes.getPicture()))
                 .orElse(attributes.toEntity());
+        
         return userRepository.save(user);
     }
 }

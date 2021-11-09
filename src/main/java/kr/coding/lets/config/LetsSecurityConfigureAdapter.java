@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import kr.coding.lets.handler.LoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -27,8 +28,9 @@ public class LetsSecurityConfigureAdapter extends WebSecurityConfigurerAdapter{
 			.antMatchers(HttpMethod.POST).authenticated()
 			.antMatchers("/auth/**", "/oauth2/**").permitAll()
             .and().logout().logoutSuccessUrl("/")
+            
             .and()
-            .oauth2Login()
+            .oauth2Login().successHandler(new LoginSuccessHandler())
                 .userInfoEndpoint().userService(customOAuth2UserService);
 		http.addFilterBefore(letsFilter, UsernamePasswordAuthenticationFilter.class);
         super.configure(http);

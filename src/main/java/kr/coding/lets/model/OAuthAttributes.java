@@ -22,9 +22,6 @@ public class OAuthAttributes {
         this.name = name;
         this.email = email;
         this.picture = picture;
-        if(phone.indexOf("+82") > 0){
-            phone = phone.substring(3, phone.length()).trim();
-        }
         this.phone = phone;
     }
 

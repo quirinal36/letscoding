@@ -23,6 +23,7 @@ public class HomeController {
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
         if(user != null){
             mv.addObject("userName", user.getName());
+            mv.addObject("user", user);
         }
         
         if(defaultUser != null){

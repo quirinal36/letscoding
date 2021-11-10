@@ -22,9 +22,6 @@ public class OAuthAttributes {
         this.name = name;
         this.email = email;
         this.picture = picture;
-        if(phone.indexOf("+82") > 0){
-            phone = phone.substring(3, phone.length()).trim();
-        }
         this.phone = phone;
     }
 
@@ -45,13 +42,18 @@ public class OAuthAttributes {
     private static OAuthAttributes ofKakao(String userNameAttributeName, Map<String, Object> attributes) {
         // kakao는 kakao_account에 유저정보가 있다. (email)
         Map<String, Object> kakaoAccount = (Map<String, Object>)attributes.get("kakao_account");
+        String phone = (String) kakaoAccount.get("phone_number");
+        if(! (phone.indexOf("+82")<0)){
+            phone = phone.substring(3, phone.length()).trim();
+            phone = "0" + phone;
+        }
         // kakao_account안에 또 profile이라는 JSON객체가 있다. (nickname, profile_image)
         Map<String, Object> kakaoProfile = (Map<String, Object>)kakaoAccount.get("profile");
         return OAuthAttributes.builder()
                 .name((String) kakaoProfile.get("nickname"))
                 .email((String) kakaoAccount.get("email"))
                 .picture((String) kakaoProfile.get("profile_image_url"))
-                .phone((String) kakaoAccount.get("phone_number"))
+                .phone(phone)
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
@@ -60,7 +62,11 @@ public class OAuthAttributes {
     private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes) {
         // JSON형태이기 떄문에 Map을 통해서 데이터를 가져온다.
         Map<String, Object> response = (Map<String, Object>)attributes.get("response");
-        
+        String phone = (String) response.get("mobile");
+        if(! (phone.indexOf("+82")<0)){
+            phone = phone.substring(3, phone.length()).trim();
+            phone = "0" + phone;
+        }
         return OAuthAttributes.builder()
                 .name((String) response.get("name"))
                 .email((String) response.get("email"))
@@ -80,7 +86,7 @@ public class OAuthAttributes {
                 .build();
     }
 
-    public User toEntity(){
+    public User toEntity(String phone){
         return User.builder()
                 .name(name)
                 .email(email)

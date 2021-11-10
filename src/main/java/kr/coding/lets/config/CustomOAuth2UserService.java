@@ -73,7 +73,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         
         User user = userRepository.findByPhone(phone)
                 .map(entity -> entity.update(attributes.getEmail(), attributes.getPicture()))
-                .orElse(attributes.toEntity());
+                .orElse(attributes.toEntity(phone));
         
         return userRepository.save(user);
     }

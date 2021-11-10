@@ -35,4 +35,14 @@ public class HomeController {
         mv.setViewName("index");
         return mv;
     }
+    @GetMapping("/lets")
+    public ModelAndView lets(ModelAndView mv){
+        mv.setViewName("lets");
+        return mv;
+    }
+    @GetMapping("/admin")
+    public ModelAndView admin(ModelAndView mv){
+        mv.setViewName("admin");
+        return mv;
+    }
 }

@@ -22,11 +22,10 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         if(alreadySetup)return;
-        log.info("onApplicationEvent");
         for(UserRole role: UserRole.values()){
             Roles createdRole = createRoleIfNotFound(new StringBuilder(role.name()).toString());
-            log.info(createdRole.toString());
         }
+        alreadySetup = true;
     }
     
     @Transactional

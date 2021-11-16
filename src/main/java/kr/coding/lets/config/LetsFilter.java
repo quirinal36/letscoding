@@ -16,13 +16,14 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class LetsFilter extends OncePerRequestFilter{
+    /*
     @Value("${servers.local.ip}")
     private String localIp;
-
+    */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        log.info("LocalIP : "+localIp);
+        
         filterChain.doFilter(request, response);
     }
 }

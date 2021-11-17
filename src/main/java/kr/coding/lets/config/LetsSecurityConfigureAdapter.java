@@ -30,7 +30,7 @@ public class LetsSecurityConfigureAdapter extends WebSecurityConfigurerAdapter{
 			.authorizeRequests()
 			.antMatchers(HttpMethod.GET).permitAll()
 			.antMatchers(HttpMethod.POST).authenticated()
-			.antMatchers("/auth/**", "/oauth2/**", "/resources/**").permitAll()
+			.antMatchers("/auth/**", "/oauth2/**").permitAll()
             .and().logout().logoutSuccessUrl("/")
             .and()
             .oauth2Login().successHandler(new LoginSuccessHandler())

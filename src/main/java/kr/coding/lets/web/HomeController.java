@@ -18,7 +18,12 @@ import lombok.extern.slf4j.Slf4j;
 public class HomeController {
     private final HttpSession httpSession;
     
-    @GetMapping("/")
+    @GetMapping("/signin")
+    public ModelAndView signin(ModelAndView mv){
+        mv.setViewName("signin");
+        return mv;
+    }
+    @GetMapping({"/", "/index"})
     public ModelAndView index(ModelAndView mv, @AuthenticationPrincipal DefaultOAuth2User defaultUser){
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
         if(user != null){
@@ -27,8 +32,6 @@ public class HomeController {
         }
         
         if(defaultUser != null){
-            log.info("user name: "+defaultUser.getName());
-            
             mv.addObject("auth", defaultUser.getAuthorities());
             mv.addObject("oauth2", defaultUser.getAttributes());
         }
@@ -43,6 +46,11 @@ public class HomeController {
     @GetMapping("/admin")
     public ModelAndView admin(ModelAndView mv){
         mv.setViewName("admin");
+        return mv;
+    }
+    @GetMapping("/common")
+    public ModelAndView common(ModelAndView mv){
+        mv.setViewName("/common");
         return mv;
     }
 }

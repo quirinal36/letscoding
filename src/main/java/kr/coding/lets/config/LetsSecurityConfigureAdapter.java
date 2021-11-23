@@ -30,8 +30,10 @@ public class LetsSecurityConfigureAdapter extends WebSecurityConfigurerAdapter{
 			.authorizeRequests()
 			.antMatchers(HttpMethod.GET).permitAll()
 			.antMatchers(HttpMethod.POST).authenticated()
-			.antMatchers("/auth/**", "/oauth2/**").permitAll()
+			.antMatchers("/auth/**", "/oauth2/**").permitAll()            
             .and().logout().logoutSuccessUrl("/")
+            .and()
+            .formLogin().loginPage("/signin")
             .and()
             .oauth2Login().successHandler(new LoginSuccessHandler())
                 .userInfoEndpoint().userService(customOAuth2UserService);

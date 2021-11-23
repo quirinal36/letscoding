@@ -18,9 +18,7 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class LetsSecurityConfigureAdapter extends WebSecurityConfigurerAdapter{
-    private static final String[] IGNORED_RESOURCE_LIST = new String[] {
-        "/assets/css/theme.min.css",
-        "/assets/libs/jquery/dist/jquery.min.js"};
+    
     @Autowired
     private LetsFilter letsFilter;
     private final CustomOAuth2UserService customOAuth2UserService;
@@ -41,8 +39,5 @@ public class LetsSecurityConfigureAdapter extends WebSecurityConfigurerAdapter{
         super.configure(http);
     }
 
-    @Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers(IGNORED_RESOURCE_LIST);
-	}
+    
 }

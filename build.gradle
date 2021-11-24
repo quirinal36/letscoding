@@ -4,8 +4,13 @@ plugins {
 	id 'java'
 	id 'jacoco'
 	id 'com.github.kt3k.coveralls' version '2.12.0'
+	id 'war'
 }
-
+bootWar {
+	archiveBaseName = 'base'
+	archiveFileName = 'ROOT.war'
+	archiveVersion = "0.0.1"
+}
 group = 'kr.coding'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>상생소비지원금 계산기 - 렛츠 코딩앤플레이 컴퓨터학원</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/assets/libs/rslider/css/rSlider.min.css">
+<script src="/assets/libs/rslider/js/rSlider.min.js"></script>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-family: 'Noto Sans KR', sans-serif;
+	letter-spacing: -1px;
+	color: inherit;
+	text-decoration: none;
+}
+.rs-container .rs-scale span ins {
+	font-size: 10px;
+}
+.loding {
+	position: relative;
+	width: 100%;
+	/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#229daa+0,73539b+100 */
+	background: #00b3bc; /* Old browsers */
+	background: -moz-linear-gradient(left,  #00b3bc 0%, #73539b 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(left,  #00b3bc 0%,#73539b 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right,  #00b3bc 0%,#73539b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00b3bc', endColorstr='#73539b',GradientType=1 ); /* IE6-9 */
+}
+.loding > div {
+	padding: 30px 10%;
+}
+.loding h1 {
+	margin-bottom: 20px;
+	font-size: 30px;
+	color: #fff;
+}
+.loding .by {
+	margin-bottom: 2px;
+	font-size: 14px;
+	color: #fff;
+}
+.loding .address,
+.loding .tel {
+	font-size: 14px;
+	color: rgba(255, 255, 255, 0.5);
+}
+.share_wrap {
+	padding: 30px 10%;
+	border-top: 1px dashed #ddd;
+}
+.share_wrap .t1 {
+	margin-bottom: 10px;
+}
+#share {
+}
+.form_wrap {
+	padding: 30px 10%;
+}
+.t1 {
+	display: block;
+	font-size: 20px;
+	font-weight: 500;
+}
+.form_wrap p {
+	margin: 10px 0 20px 0;
+	font-size: 14px;
+	word-break: keep-all;
+}
+.form_wrap input[type="text"] {
+	width: 200px;
+	border-bottom: 3px solid #000;
+	border-radius: 0 !important;
+	text-align: center;
+	font-size: 40px;
+}
+.form_wrap input[type="text"] + span {
+	font-size: 20px;
+}
+input {
+   -webkit-appearance: none;
+   -webkit-border-radius: 0;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.bt {
+	display: block;
+	padding: 10px 20px;
+	border-radius: 0 !important;
+	background: #00b3bc ;
+	line-height: 100%;
+	font-size: 20px;
+	font-weight: 500;
+	color: #fff;
+	cursor: pointer;
+}
+.bt2 {
+	display: inline-block;
+	margin-left: 10px;
+	padding: 3px 6px;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	font-size: 12px;
+	font-weight: 100;
+}
+.result_wrap {
+	padding: 30px 10%;
+	border-top: 1px dashed #ddd;
+}
+.result_wrap p {
+	margin: 10px 0 40px 0;
+	font-size: 14px;
+	word-break: keep-all;
+}
+.price_wrap {
+	margin-top: 30px;
+}
+.price_wrap b {
+	font-size: 40px;
+	font-weight: 400;
+}
+.guide_wrap {
+	padding: 30px 10%;
+	border-top: 1px dashed #ddd;
+}
+.guide_wrap p {
+	position: relative;
+	padding-left: 10px;
+	font-size: 12px;
+	color: #777;
+	word-break: keep-all;
+}
+.guide_wrap p::before {
+	content: "-";
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.guide_wrap p a {
+	text-decoration: underline;
+}
+</style>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XS3Y6S0LWD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XS3Y6S0LWD');
+</script>
+</head>
+<body>
+	<div class="loding">
+		<div>
+			<h1>상생소비지원금 계산기</h1>
+			<p class="by">by 렛츠 코딩앤플레이 컴퓨터학원 <a href="http://pf.kakao.com/_HxfJxks/chat" target="_blank" class="bt2">문의 및 피드백</a></p>
+			<p class="address">전북혁신도시 대방디엠시티 건너편 대온빌딩 3층</p>
+			<a href="tel:0637142536" class="tel">063-714-2536</a>
+		</div>
+	</div>
+	<div class="form_wrap">
+		<form>
+			<strong class="t1">2분기 월평균 이용금액</strong>
+			<p>아래에 월평균 이용금액을 입력하면 예상 지원금(0~10만원)에 대한 이용해야 할 금액이 자동으로 계산됩니다.</p>
+			<input id="money" type="text" pattern="[0-9]*" value="1000000" maxlength="9"> <span>원</span>
+			<!-- <input type="button" value="계산하기" class="bt" id="calc"> -->
+		</form>
+	</div>
+	<div class="result_wrap">
+		<strong class="t1">예상 지원금</strong>
+		<p>막대를 좌우로 드래그하여 예상 지원금을 변경해보세요.</p>
+		<input type="text" id="slider" class="slider">
+		<div class="price_wrap">
+			<strong class="t1">이용해야 할 금액</strong>
+			<p><b id="resultdd"></b> <span>원</span></p>
+			
+		</div>
+	</div>
+	<div class="share_wrap">
+		<strong class="t1">공유하기</strong>
+		<a id="share" href="javascript:shareKakao();">
+			<img src="/assets/images/png/share.png" width="50px" height="50px">
+		</a>
+	</div>
+	<div class="guide_wrap">
+		<p>상생소비지원금이란 지역경제 활성화와 소비회복 촉진을 위해 신용 또는 체크카드를 2분기 월평균 사용액보다 3% 많이 쓰면,
+3%를 넘는 증가분의 10%를 1인당 월 10만원까지 현금성 충전금으로 환급해 주는 사업입니다.</p>
+		<p>공식 홈페이지 : <a href="http://xn--jj0bw12auzbhdy1be5unkf.kr/" target="_blank">http://상생소비지원금.kr/</a></p>
+		<p>이 계산기는 단순 참고용으로만 이용하시기 바랍니다.</p>
+	</div>
+</body>
+<script>
+var mySlider = new rSlider({
+    target: '#slider',
+    values: ["0", "1만원", "2만원", "3만원", "4만원", "5만원","6만원","7만원","8만원","9만원","10만원"],
+    range: false, // range slider
+    set:    ["5만원"], // an array of preselected values
+    width:    "300px",
+    scale:    true,
+    labels:   true,
+    tooltip:  true,
+    step:     null, // step size
+    disabled: false, // is disabled?
+    onChange: changeRange // callback
+});
+function changeRange(values){
+	var hope = 0;
+	if(values.length > 1){
+		hope = values.substring(0, values.length-2);
+	}
+	hope = hope * 10000;
+	
+	var actualCardAmount = (hope*10) + ($("#money").val()*1.03);
+	document.getElementById("resultdd").innerHTML = Math.ceil(actualCardAmount);	
+}
+$(function(){
+	  // 사용할 앱의 JavaScript 키 설정
+	  Kakao.init('fafe92268a1e2eddcfbd696b2b79c7c9');
+	 
+	  // 카카오링크 버튼 생성
+	  Kakao.Link.createDefaultButton({
+	    container: '#share', // 카카오공유버튼ID
+	    objectType: 'feed',
+	    content: {
+	      title: "상생소비지원금 계산기", // 보여질 제목
+	      description: "월 최대 10만원 캐시백이라던데, 얼마를 써야할지 궁금할 때", // 보여질 설명
+	      imageUrl: "", // 콘텐츠 URL
+	      link: {
+	         mobileWebUrl: "http://letscoding.kr/calc",
+	         webUrl: "http://letscoding.kr/calc"
+	      }
+	    }
+	  });
+	})
+$("#money").click(function(){
+	document.getElementById("money").value = null;
+});
+$("#money").keyup(function(){
+	changeRange($("#slider").val());
+});
+</script>
+</html>

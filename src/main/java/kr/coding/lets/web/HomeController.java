@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -51,6 +52,12 @@ public class HomeController {
     @GetMapping("/common")
     public ModelAndView common(ModelAndView mv){
         mv.setViewName("/common");
+        return mv;
+    }
+
+    @GetMapping("/calc")
+    public ModelAndView calc(ModelAndView mv){
+        mv.setViewName("/calc");
         return mv;
     }
 }

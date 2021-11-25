@@ -1,4 +1,4 @@
-package kr.coding.lets.model;
+package kr.coding.lets.model.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

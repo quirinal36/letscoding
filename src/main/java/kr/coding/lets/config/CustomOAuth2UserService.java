@@ -14,11 +14,11 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import kr.coding.lets.model.OAuthAttributes;
 import kr.coding.lets.model.Roles;
 import kr.coding.lets.model.SessionUser;
 import kr.coding.lets.model.User;
-import kr.coding.lets.model.UserRole;
+import kr.coding.lets.model.enums.UserRole;
+import kr.coding.lets.model.oauth.OAuthAttributes;
 import kr.coding.lets.repository.UserRepository;
 import kr.coding.lets.service.RolesService;
 

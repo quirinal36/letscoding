@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import kr.coding.lets.model.enums.Week;
+
 import javax.persistence.GenerationType;
 
 import lombok.Getter;

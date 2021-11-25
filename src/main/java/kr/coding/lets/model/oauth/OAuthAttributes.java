@@ -1,10 +1,12 @@
-package kr.coding.lets.model;
+package kr.coding.lets.model.oauth;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
+
+import kr.coding.lets.model.User;
 @Slf4j
 @Getter
 public class OAuthAttributes {

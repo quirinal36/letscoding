@@ -371,6 +371,18 @@
 		<!-- Collapse -->
 		<div class="collapse navbar-collapse" id="navbar-default">
 			<ul class="navbar-nav">
+				<li th:each="menu: ${menus}" class="nav-item dropdown">
+					<a
+						class="nav-link "
+						href="#"
+						id="navbarBrowse"
+						data-bs-toggle="dropdown"
+						aria-haspopup="false"
+						aria-expanded="false"
+						data-bs-display="static"
+						th:text="${menu.name}">
+					</a>
+				</li>
 				<li class="nav-item dropdown">
 					<!-- removed dropdown-toggle from class-->
 					<a

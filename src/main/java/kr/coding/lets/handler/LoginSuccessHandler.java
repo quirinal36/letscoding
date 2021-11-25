@@ -10,7 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import kr.coding.lets.model.UserRole;
+import kr.coding.lets.model.enums.UserRole;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

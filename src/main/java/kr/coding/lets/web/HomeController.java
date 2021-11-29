@@ -5,10 +5,10 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,14 +29,18 @@ public class HomeController {
     
     @GetMapping("/signin")
     public ModelAndView signin(ModelAndView mv){
+        List<Menus> menus = menusRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
+        if(menus.size() > 0){
+            mv.addObject("menus", menus);
+        }
         mv.setViewName("signin");
         return mv;
     }
     @GetMapping({"/", "/index"})
     public ModelAndView index(ModelAndView mv, @AuthenticationPrincipal DefaultOAuth2User defaultUser){
-        List<Menus> menus = menusRepository.findAll();
-        for(Menus menu: menus){
-            log.info("menu name: " + menu.getName());
+        List<Menus> menus = menusRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
+        if(menus.size() > 0){
+            mv.addObject("menus", menus);
         }
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
         if(user != null){
@@ -63,13 +67,6 @@ public class HomeController {
     }
     @GetMapping("/common")
     public ModelAndView common(ModelAndView mv){
-        List<Menus> menus = menusRepository.findAll();
-        for(Menus menu: menus){
-            log.info("menu name: " + menu.getName());
-        }
-        if(menus.size() > 0){
-            mv.addObject("menus", menus);
-        }
         mv.setViewName("/common");
         return mv;
     }

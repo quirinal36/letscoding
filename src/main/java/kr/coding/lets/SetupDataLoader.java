@@ -53,10 +53,14 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     List<Menus> createMenuIfNotFound(){
         List<Menus> list = new ArrayList<>();
         for(MenuEnum menu : MenuEnum.values()){
+            log.info(menu.toString());
             Optional<Menus> findResult = menusRepository.findByName(menu.getName());
             if(!findResult.isPresent()){
                 Menus menus = Menus.builder()
-                            .name(menu.getName()).build();
+                            .name(menu.getName())
+                            .uri(menu.getUri())
+                            .build();
+                            
                 menusRepository.save(menus);
                 list.add(menus);
             }

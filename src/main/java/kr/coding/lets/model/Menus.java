@@ -26,8 +26,12 @@ public class Menus {
     @Column(unique = true)
     private String name;
 
+    @Column
+    private String uri;
+
     @Builder
-    public Menus (String name){
+    public Menus (String name, String uri){
         this.name = name;
+        this.uri = uri;
     }
 }

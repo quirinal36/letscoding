@@ -11,9 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-
-
-
 @EnableAutoConfiguration
 @EnableJpaRepositories("kr.coding.lets.repository")
 @EntityScan("kr.coding.lets.model")

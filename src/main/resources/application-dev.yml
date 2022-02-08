@@ -16,7 +16,7 @@ spring:
     url: jdbc:mariadb://letscoding.kr:3306/lets
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
-    password: 1111
+    password: Gudrn!@09
   jpa:
     database-platform: org.hibernate.dialect.MariaDB103Dialect
     open-in-view: false

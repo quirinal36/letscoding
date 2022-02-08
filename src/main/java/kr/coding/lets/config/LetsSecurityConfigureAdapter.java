@@ -18,7 +18,10 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class LetsSecurityConfigureAdapter extends WebSecurityConfigurerAdapter{
-    
+    private static final String[] IGNORED_RESOURCE_LIST = new String[] {"/v2/api-docs","/swagger-resources/**",
+            "/swagger-ui/*", "/api/v1/authenticate", 
+            "/api/v1/member/add", "/api/v1/get_access_token",
+            "/resources/**", "/robots.txt", "/sitemap.xml"};
     @Autowired
     private LetsFilter letsFilter;
     private final CustomOAuth2UserService customOAuth2UserService;
@@ -27,7 +30,7 @@ public class LetsSecurityConfigureAdapter extends WebSecurityConfigurerAdapter{
         http.csrf().disable()
 			.authorizeRequests()
 			.antMatchers(HttpMethod.GET).permitAll()
-			.antMatchers(HttpMethod.POST).authenticated()
+			.antMatchers(HttpMethod.POST).permitAll()
 			.antMatchers("/auth/**", "/oauth2/**").permitAll()            
             .and().logout().logoutSuccessUrl("/")
             .and()
@@ -38,6 +41,9 @@ public class LetsSecurityConfigureAdapter extends WebSecurityConfigurerAdapter{
 		http.addFilterBefore(letsFilter, UsernamePasswordAuthenticationFilter.class);
         super.configure(http);
     }
-
+    @Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring().antMatchers(IGNORED_RESOURCE_LIST);
+	}
     
 }
